@@ -1,0 +1,64 @@
+*
+
+html, body {
+    background-color: black;
+   
+}
+
+
+.nav {
+    margin-top: 30px;
+    text-align: justify;
+    
+}
+
+.first,
+.second,
+.third {
+
+    text-decoration: none;
+    color: rgb(168, 165, 165);
+
+}
+
+.main {
+    color: white;
+    font-size: 20px;
+    text-align: justify;
+    margin-bottom: 0%;
+
+}
+
+.textbody {
+    text-align: justify;
+    color: white;
+}
+
+.find,
+.me,
+.he {
+    text-decoration: none;
+    font-size: 13px;
+    color: rgb(168, 165, 165);
+   
+}
+.last {
+    text-decoration: none;
+    font-size: 13px;
+    color: rgb(168, 165, 165);
+
+    margin-bottom: 20%;
+}
+
+.she{
+     text-decoration: none;
+    font-size: 13px;
+    color: rgb(168, 165, 165);
+    
+    text-align: justify;
+}
+.container {
+    margin: 0 auto;
+    width: 80%;
+
+}

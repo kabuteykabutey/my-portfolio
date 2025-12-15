@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>guest book</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="guestbook.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBmt0khZDoRZ0KbAy6HfGk_9bAoO3TqwHM",
+        authDomain: "my-portfolioone.firebaseapp.com",
+        projectId: "my-portfolioone",
+        storageBucket: "my-portfolioone.firebasestorage.app",
+        messagingSenderId: "876865153828",
+        appId: "1:876865153828:web:8add3c2c079e9115d721b1",
+        measurementId: "G-KDRVPHTCX1"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+      window.db = db;
+    </script>
+</head>
+<body class="background">
+     <nav class="nav">
+    <ul>
+    <li style="display:inline-block; vertical-align:top; margin-right:24px;" class="home">
+       <a href="index.html" class="first"> home</a>
+    </li>
+    <li style="display:inline-block; vertical-align:top; margin-right:24px;">
+        <a href="philosophies.html" class="second">philosophies</a>
+       
+    </li>
+    <li style="display:inline-block; vertical-align:top;">
+        <a href="guestbook.html" class="third">guestbook</a>
+    
+
+    </ul>
+    <div class="container">
+
+    
+  
+    <h1></h1>
+    <p class="p">Don't forget to say Hi before you go.</p>
+
+   <form id="guestbook-form">
+
+  <label for="experience" class="sign">Your Thoughts </label>
+  <textarea id="experience" name="experience"
+    placeholder="Write your experience here..." required></textarea>
+
+  <label for="name" class="sign">Sign here</label>
+  <input type="text" id="name" name="name"
+    placeholder="Type your name" required>
+
+  <button type="submit">Submit</button>
+</form>
+
+  <div id="reviews" class="reviews" aria-live="polite">
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', async function () {
+    const form = document.getElementById('guestbook-form');
+    const reviewsEl = document.getElementById('reviews');
+
+    function createReviewEl(review) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'review';
+
+      const header = document.createElement('div');
+      header.className = 'review-header';
+      header.textContent = (review.name || 'Guest') + ' • ' + review.time.toDate().toLocaleString();
+
+      const body = document.createElement('p');
+      body.className = 'review-text';
+      body.textContent = review.text;
+
+      wrapper.appendChild(header);
+      wrapper.appendChild(body);
+      return wrapper;
+    }
+
+    async function loadReviews() {
+      try {
+        const q = window.db.collection('reviews').orderBy('time', 'desc');
+        const querySnapshot = await q.get();
+        reviewsEl.innerHTML = '';
+        querySnapshot.forEach((doc) => {
+          const review = doc.data();
+          reviewsEl.appendChild(createReviewEl(review));
+        });
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+      }
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const name = form.name.value.trim();
+      const text = form.experience.value.trim();
+      if (!text) return;
+
+      try {
+        await window.db.collection('reviews').add({
+          name: name || 'Guest',
+          text,
+          time: new Date()
+        });
+
+        loadReviews();
+        form.reset();
+      } catch (error) {
+        console.error('Error adding review:', error);
+        alert('Failed to submit review. Please try again.');
+      }
+    });
+
+    loadReviews();
+  });
+  </script>
+
+  </div>
+
+
+
+</body>
+</html>

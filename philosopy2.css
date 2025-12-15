@@ -1,0 +1,38 @@
+* 
+
+html, body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+.body{
+    background-color: black;
+
+}
+.home{
+    text-decoration: none;
+    color: white;
+}
+.button{
+     border-radius: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color:rgb(63, 63, 63);
+}
+.p1{
+    text-indent: 20px;
+    
+    margin-top: 30px;
+    text-align: justify;
+    color: white;
+    font-size: 13px;
+}
+.container{
+    text-align: center;
+   margin: 80px;
+}
