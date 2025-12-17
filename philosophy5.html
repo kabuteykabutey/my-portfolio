@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>philosophy</title>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="philosopy5.css">
+    <link rel="stylesheet" href="philosopy5.css">
 
 </head>
+
 <body class="body">
-     <div class="container">
-     <p class="p1">
-          In my free time, I enjoy expressing myself through music by playing the violin,<br>
-           which helps me relax and sharpen my focus, while also allowing me to be creative
-           in<br> a different way. I also love gaming, as it challenges my strategic thinking,
-           problem-solving<br> skills, and teamwork, while providing a fun and engaging way to 
-           unwind. Together, these hobbies<br> balance creativity and logic, keeping me motivated
+    <div class="container">
+        <p class="p1">
+            In my free time, I enjoy expressing myself through music by playing the violin,<br>
+            which helps me relax and sharpen my focus, while also allowing me to be creative
+            in<br> a different way. I also love gaming, as it challenges my strategic thinking,
+            problem-solving<br> skills, and teamwork, while providing a fun and engaging way to
+            unwind. Together, these hobbies<br> balance creativity and logic, keeping me motivated
             and inspired both mentally and emotionally.
 
-     </p>
-     <button class="button"><a href="philosophies.html" class="home">philosophies</a></button>
+        </p>
+        <button class="button"><a href="philosophies.html" class="home">philosophies</a></button>
+        <button id="speak-btn" class="button"
+            style="background-color: rgb(63, 63, 63); color: white; border: none; cursor: pointer; padding: 10px;">🔊
+            Read
+            Page</button>
     </div>
+    <script>
+        document.getElementById('speak-btn').addEventListener('click', function () {
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            } else {
+                var container = document.querySelector('.container') || document.body;
+                var clone = container.cloneNode(true);
+                var buttons = clone.querySelectorAll('button');
+                buttons.forEach(function (btn) { btn.remove(); });
+                var text = clone.innerText;
+                var utterance = new SpeechSynthesisUtterance(text);
+                window.speechSynthesis.speak(utterance);
+            }
+        });
+    </script>
 </body>
+
 </html>

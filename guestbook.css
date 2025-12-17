@@ -1,47 +1,51 @@
 * {
-    font-family: 'Comic Neue', sans-serif;
+  font-family: 'Comic Neue', sans-serif;
 }
 
-html, body {
-    background-color: black;
-    margin: 0;
-    padding: 0;
+html,
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
 }
 
 .background {
-    text-align: center;
-    background-color: black;
-    font-family: 'Comic Neue', sans-serif;
+  text-align: center;
+  background-color: black;
+  font-family: 'Comic Neue', sans-serif;
 }
 
 .nav {
-    margin-top: 30px;
-    text-align: center;
+  margin-top: 30px;
+  text-align: center;
 }
 
 .first,
 .second,
 .third {
-    text-decoration: none;
-    color: rgb(168, 165, 165);
-  
+  text-decoration: none;
+  color: rgb(168, 165, 165);
+
 }
-.p{
-    color:  rgb(168, 165, 165);
-    text-align: center;
+
+.p {
+  color: rgb(168, 165, 165);
+  text-align: center;
 }
 
 #name {
   font-size: 18px;
-  
+
 }
+
 .container {
-    text-align: center;
+  text-align: center;
   background: rgb(41, 41, 41);
   padding: 25px;
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
 }
 
@@ -61,14 +65,17 @@ textarea {
   height: 120px;
   padding: 10px;
   resize: none;
-  
+  box-sizing: border-box;
+  /* Important for padding to not affect width */
 }
 
-input, textarea {
+input,
+textarea {
   border: 1px solid #0a0a0a;
   border-radius: 5px;
   margin-top: 5px;
-  
+  box-sizing: border-box;
+  /* Important for padding */
 }
 
 button {
@@ -86,8 +93,9 @@ button {
 button:hover {
   background: #1b1b1b;
 }
-.sign{
-   color:rgb(168, 165, 165); 
+
+.sign {
+  color: rgb(168, 165, 165);
 }
 
 /* Guest review styles */
@@ -95,7 +103,8 @@ button:hover {
   margin-top: 20px;
   display: block;
   margin: 20px auto 0;
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
 }
 
 .review {
@@ -104,7 +113,7 @@ button:hover {
   border-radius: 6px;
   margin-bottom: 12px;
   color: #e6e6e6;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .review-header {
