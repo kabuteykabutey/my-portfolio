@@ -1,15 +1,14 @@
-*
-
-html, body {
+* html,
+body {
     background-color: black;
-   
+
 }
 
 
 .nav {
     margin-top: 30px;
     text-align: justify;
-    
+
 }
 
 .first,
@@ -31,6 +30,7 @@ html, body {
 
 .textbody {
     text-align: justify;
+    text-indent: 10px;
     color: white;
 }
 
@@ -40,8 +40,9 @@ html, body {
     text-decoration: none;
     font-size: 13px;
     color: rgb(168, 165, 165);
-   
+
 }
+
 .last {
     text-decoration: none;
     font-size: 13px;
@@ -50,15 +51,65 @@ html, body {
     margin-bottom: 20%;
 }
 
-.she{
-     text-decoration: none;
+.she {
+    text-decoration: none;
     font-size: 13px;
     color: rgb(168, 165, 165);
-    
+
     text-align: justify;
 }
+
 .container {
     margin: 0 auto;
     width: 80%;
 
+}
+
+.tittle {
+    font-family: 'Comic Neue', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.tittle span:after {
+    content: "Python";
+    animation: words 6s infinite;
+}
+
+@keyframes words {
+
+    0%,
+    33% {
+        content: "Python";
+        color: #00ff7f;
+
+    }
+
+    34%,
+    66% {
+        content: "JavaScript";
+        color: #ff00ff;
+
+    }
+
+    67%,
+    100% {
+        content: "DataBase";
+        color: #ffd700;
+
+    }
+
+    101%,
+    134% {
+        content: "HTML & CSS";
+        color: #7623d4;
+
+    }
+
+    135%,
+    168% {
+        content: "Software Development Life Cycle";
+        color: rgb(241, 150, 46)
+    }
 }
