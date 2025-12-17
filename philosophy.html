@@ -65,6 +65,16 @@
                 window.speechSynthesis.speak(utterance);
             }
         });
+
+        // Stop speaking when leaving the page
+        window.addEventListener('beforeunload', function () {
+            window.speechSynthesis.cancel();
+        });
+
+        // Fallback for some mobile browsers
+        window.addEventListener('pagehide', function () {
+            window.speechSynthesis.cancel();
+        });
     </script>
 </body>
 
