@@ -21,10 +21,12 @@
       Ultimately, I envision myself leading innovative<br> projects that make a positive impact on
       users and the tech community as a whole.
     </p>
-    <button class="button"><a href="philosophies.html" class="home">philosophies</a></button>
-    <button id="speak-btn" class="button"
-      style="background-color: rgb(63, 63, 63); color: white; border: none; cursor: pointer; padding: 10px;">🔊 Read
-      Page</button>
+    <div style="text-align: left; margin-top: 20px;">
+      <button class="button"><a href="philosophies.html" class="home">philosophies</a></button>
+      <button id="speak-btn" class="button"
+        style="background-color: rgb(63, 63, 63); color: white; border: none; cursor: pointer; padding: 10px;">🔊 Read
+        Page</button>
+    </div>
   </div>
   <script>
     document.getElementById('speak-btn').addEventListener('click', function () {
@@ -39,16 +41,6 @@
         var utterance = new SpeechSynthesisUtterance(text);
         window.speechSynthesis.speak(utterance);
       }
-    });
-
-    // Stop speaking when leaving the page
-    window.addEventListener('beforeunload', function () {
-      window.speechSynthesis.cancel();
-    });
-
-    // Fallback for some mobile browsers
-    window.addEventListener('pagehide', function () {
-      window.speechSynthesis.cancel();
     });
   </script>
 </body>
