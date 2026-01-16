@@ -1,38 +1,44 @@
-*
-
-html, body {
+* html,
+body {
     background-color: black;
     margin: 0;
     padding: 0;
 }
 
-.body{
+.body {
     background-color: black;
+    text-align: center;
 }
-.home{
+
+.content-wrapper {
+    display: inline-block;
+    text-align: left;
+    max-width: 800px;
+    margin-top: 50px;
+}
+
+.back-link {
     text-decoration: none;
-    color: white;
-    text-align: center;
+    color: rgb(168, 165, 165);
+    font-size: 14px;
 }
-.button{
-     border-radius: 10px;
+
+.button {
+    border-radius: 10px;
     text-align: center;
-    margin-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color:rgb(63, 63, 63);
+    padding: 10px;
+    background-color: rgb(63, 63, 63);
 }
-.p1{
+
+.p1 {
     text-indent: 20px;
-    
+
     margin-top: 30px;
     text-align: justify;
     color: white;
     font-size: 13px;
 }
-.container{
+
+.container {
     text-align: center;
-   margin: 80px;
 }

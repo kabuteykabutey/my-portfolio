@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>philosophy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="philosopy4.css">
 
 
@@ -13,15 +12,57 @@
 
 <body class="body">
     <div class="container">
-        <p class="p1"><a href="https://github.com/kabuteykabutey?tab=repositories"><img src="images.png" alt="photo"
-                    class="a"></a></p>
-        <div style="text-align: left; padding-left: 20px;">
-            <button class="button"><a href="philosophies.html" class="home">philosophies</a></button>
-            
-        </div>
+        <div class="content-wrapper">
+            <div style="margin-bottom: 20px;">
+                <a href="philosophies.html" class="back-link">↗ philosophies</a>
+            </div>
 
+            <div id="repo-grid" class="repo-grid">
+                <!-- Repos will be loaded here -->
+                <p style="color: grey;">Loading projects...</p>
+            </div>
+        </div>
     </div>
-   
+
+    <script>
+        async function fetchRepos() {
+            const grid = document.getElementById('repo-grid');
+            try {
+                // type=all returns owner, member, and collaborator repos
+                const response = await fetch('https://api.github.com/users/kabuteykabutey/repos?sort=updated&type=all');
+                if (!response.ok) throw new Error('Failed to fetch');
+
+                const repos = await response.json();
+                grid.innerHTML = '';
+
+                repos.forEach(repo => {
+                    const card = document.createElement('a');
+                    card.href = repo.html_url;
+                    card.className = 'repo-card';
+                    card.target = '_blank';
+
+                    const ownerName = repo.owner.login !== 'kabuteykabutey' ? `<span class="repo-owner">${repo.owner.login}/</span>` : '';
+
+                    card.innerHTML = `
+                        <div class="repo-content">
+                            <h3 class="repo-title">↗ ${ownerName}${repo.name}</h3>
+                            <p class="repo-desc">${repo.description || 'No description provided.'}</p>
+                            <div class="repo-meta">
+                                <span>${repo.language || 'Plain Text'}</span>
+                                <span>⭐ ${repo.stargazers_count}</span>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                grid.innerHTML = '<p style="color: #ff6b6b;">Failed to load repositories. Please try again later.</p>';
+            }
+        }
+        fetchRepos();
+    </script>
+
 </body>
 
 </html>

@@ -1,132 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>guest book</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="guestbook.css">
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyBmt0khZDoRZ0KbAy6HfGk_9bAoO3TqwHM",
-        authDomain: "my-portfolioone.firebaseapp.com",
-        projectId: "my-portfolioone",
-        storageBucket: "my-portfolioone.firebasestorage.app",
-        messagingSenderId: "876865153828",
-        appId: "1:876865153828:web:8add3c2c079e9115d721b1",
-        measurementId: "G-KDRVPHTCX1"
-      };
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>guest book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="guestbook.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBmt0khZDoRZ0KbAy6HfGk_9bAoO3TqwHM",
+      authDomain: "my-portfolioone.firebaseapp.com",
+      projectId: "my-portfolioone",
+      storageBucket: "my-portfolioone.firebasestorage.app",
+      messagingSenderId: "876865153828",
+      appId: "1:876865153828:web:8add3c2c079e9115d721b1",
+      measurementId: "G-KDRVPHTCX1"
+    };
 
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
 
-      window.db = db;
-    </script>
+    window.db = db;
+    window.auth = auth;
+  </script>
 </head>
+
 <body class="background">
-     <nav class="nav">
+  <nav class="nav">
     <ul>
-    <li style="display:inline-block; vertical-align:top; margin-right:24px;" class="home">
-       <a href="index.html" class="first"> home</a>
-    </li>
-    <li style="display:inline-block; vertical-align:top; margin-right:24px;">
+      <li style="display:inline-block; vertical-align:top; margin-right:24px;" class="home">
+        <a href="index.html" class="first"> home</a>
+      </li>
+      <li style="display:inline-block; vertical-align:top; margin-right:24px;">
         <a href="philosophies.html" class="second">philosophies</a>
-       
-    </li>
-    <li style="display:inline-block; vertical-align:top;">
+
+      </li>
+      <li style="display:inline-block; vertical-align:top;">
         <a href="guestbook.html" class="third">guestbook</a>
-    
+
 
     </ul>
     <div class="container">
 
-    
-  
-    <h1></h1>
-    <p class="p">Don't forget to say Hi before you go.</p>
 
-   <form id="guestbook-form">
 
-  <label for="experience" class="sign">Your Thoughts </label>
-  <textarea id="experience" name="experience"
-    placeholder="Write your experience here..." required></textarea>
+      <h1></h1>
+      <p class="p">Don't forget to say Hi before you go.</p>
 
-  <label for="name" class="sign">Sign here</label>
-  <input type="text" id="name" name="name"
-    placeholder="Type your name" required>
+      <!-- Authentication Section -->
+      <div id="auth-section" class="auth-box">
+        <div id="auth-buttons">
+          <p class="p" style="font-size: 14px;">Sign in to leave a review</p>
+          <div class="auth-btn-group">
+            <button type="button" id="google-signin" class="auth-btn google">Login with Google</button>
+            <button type="button" id="github-signin" class="auth-btn github">Login with GitHub</button>
+          </div>
+        </div>
+        <div id="user-info" style="display: none;">
+          <div class="user-profile">
+            <img id="user-profile-pic" src="" alt="Profile" class="profile-pic" referrerpolicy="no-referrer">
+            <p class="p" style="font-size: 14px; margin: 0;">Signed in as <span id="user-name"
+                style="font-weight: bold; color: white;"></span></p>
+          </div>
+          <button type="button" id="signout" class="auth-btn signout">Sign Out</button>
+        </div>
+      </div>
 
-  <button type="submit">Submit</button>
-</form>
+      <form id="guestbook-form" style="display: none;">
 
-  <div id="reviews" class="reviews" aria-live="polite">
-  </div>
+        <label for="experience" class="sign">Your Thoughts </label>
+        <textarea id="experience" name="experience" placeholder="Write your experience here..." required></textarea>
 
-  <script>
-  document.addEventListener('DOMContentLoaded', async function () {
-    const form = document.getElementById('guestbook-form');
-    const reviewsEl = document.getElementById('reviews');
+        <label for="name" class="sign">Sign here</label>
+        <div class="signature-container">
+          <canvas id="signature-pad" width="400" height="200"></canvas>
+          <div class="signature-buttons">
+            <button type="button" id="undo-signature" class="clear-btn">Undo</button>
+            <button type="button" id="clear-signature" class="clear-btn">Clear Signature</button>
+          </div>
+        </div>
 
-    function createReviewEl(review) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'review';
+        <button type="submit">Submit</button>
+      </form>
 
-      const header = document.createElement('div');
-      header.className = 'review-header';
-      header.textContent = (review.name || 'Guest') + ' • ' + review.time.toDate().toLocaleString();
+      <div id="reviews" class="reviews" aria-live="polite">
+      </div>
 
-      const body = document.createElement('p');
-      body.className = 'review-text';
-      body.textContent = review.text;
+      <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+          const form = document.getElementById('guestbook-form');
+          const reviewsEl = document.getElementById('reviews');
+          const canvas = document.getElementById('signature-pad');
+          const ctx = canvas.getContext('2d');
+          const clearBtn = document.getElementById('clear-signature');
+          const undoBtn = document.getElementById('undo-signature');
+          const authBox = document.getElementById('auth-section');
+          const authButtons = document.getElementById('auth-buttons');
+          const userInfo = document.getElementById('user-info');
+          const userNameSpan = document.getElementById('user-name');
+          const userProfilePic = document.getElementById('user-profile-pic');
+          let currentUser = null;
+          let drawing = false;
+          let strokes = []; // To store history for undo
 
-      wrapper.appendChild(header);
-      wrapper.appendChild(body);
-      return wrapper;
-    }
+          // Auth State Handling
+          window.auth.onAuthStateChanged((user) => {
+            if (user) {
+              currentUser = user;
+              authButtons.style.display = 'none';
+              userInfo.style.display = 'block';
+              userNameSpan.textContent = user.displayName || 'Guest';
+              const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || 'Guest')}&background=random`;
+              userProfilePic.src = user.photoURL || fallback;
+              userProfilePic.onerror = () => {
+                userProfilePic.src = fallback;
+                userProfilePic.onerror = null;
+              };
+              form.style.display = 'block';
+            } else {
+              currentUser = null;
+              authButtons.style.display = 'block';
+              userInfo.style.display = 'none';
+              form.style.display = 'none';
+            }
+          });
 
-    async function loadReviews() {
-      try {
-        const q = window.db.collection('reviews').orderBy('time', 'desc');
-        const querySnapshot = await q.get();
-        reviewsEl.innerHTML = '';
-        querySnapshot.forEach((doc) => {
-          const review = doc.data();
-          reviewsEl.appendChild(createReviewEl(review));
+          // Login logic
+          const handleAuthError = (err) => {
+            console.error(err);
+            if (err.code === 'auth/account-exists-with-different-credential') {
+              alert('An account already exists with this email using a different login method. Please use your other social account or check FIREBASE_SETUP.md to enable multiple accounts.');
+            } else if (err.code === 'auth/cancelled-popup-request') {
+              // Silently ignore or log - happens when user clicks multiple times
+            } else {
+              alert('Authentication failed: ' + err.message);
+            }
+          };
+
+          document.getElementById('google-signin').addEventListener('click', () => {
+            window.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+              .then(() => {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                return window.auth.signInWithPopup(provider);
+              })
+              .catch(handleAuthError);
+          });
+
+          document.getElementById('github-signin').addEventListener('click', () => {
+            window.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+              .then(() => {
+                const provider = new firebase.auth.GithubAuthProvider();
+                return window.auth.signInWithPopup(provider);
+              })
+              .catch(handleAuthError);
+          });
+
+          document.getElementById('signout').addEventListener('click', () => {
+            window.auth.signOut();
+          });
+
+          // Signature Drawing Logic
+          function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+              x: clientX - rect.left,
+              y: clientY - rect.top
+            };
+          }
+
+          function startDrawing(e) {
+            drawing = true;
+            const pos = getPos(e);
+            strokes.push([{ x: pos.x, y: pos.y }]); // Start a new stroke
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+            e.preventDefault();
+          }
+
+          function draw(e) {
+            if (!drawing) return;
+            const pos = getPos(e);
+            const currentStroke = strokes[strokes.length - 1];
+            currentStroke.push({ x: pos.x, y: pos.y }); // Store point
+
+            ctx.lineTo(pos.x, pos.y);
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            e.preventDefault();
+          }
+
+          function stopDrawing() {
+            drawing = false;
+          }
+
+          function redraw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+
+            strokes.forEach(stroke => {
+              if (stroke.length < 1) return;
+              ctx.beginPath();
+              ctx.moveTo(stroke[0].x, stroke[0].y);
+              for (let i = 1; i < stroke.length; i++) {
+                ctx.lineTo(stroke[i].x, stroke[i].y);
+              }
+              ctx.stroke();
+            });
+          }
+
+          canvas.addEventListener('mousedown', startDrawing);
+          canvas.addEventListener('mousemove', draw);
+          window.addEventListener('mouseup', stopDrawing);
+
+          canvas.addEventListener('touchstart', startDrawing);
+          canvas.addEventListener('touchmove', draw);
+          canvas.addEventListener('touchend', stopDrawing);
+
+          clearBtn.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            strokes = []; // Clear history
+          });
+
+          undoBtn.addEventListener('click', () => {
+            strokes.pop(); // Remove last stroke
+            redraw();
+          });
+
+          function createReviewEl(review) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'review';
+
+            const header = document.createElement('div');
+            header.className = 'review-header';
+
+            const headerText = document.createElement('span');
+            headerText.textContent = (review.name || 'Guest') + ' • ' + review.time.toDate().toLocaleString();
+
+            if (review.profilePic || review.name) {
+              const headerPic = document.createElement('img');
+              const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(review.name || 'Guest')}&background=random`;
+              headerPic.src = review.profilePic || fallback;
+              headerPic.onerror = () => {
+                headerPic.src = fallback;
+                headerPic.onerror = null;
+              };
+              headerPic.className = 'review-profile-pic';
+              headerPic.referrerPolicy = "no-referrer";
+              headerPic.alt = "";
+              header.appendChild(headerPic);
+            }
+
+            header.appendChild(headerText);
+
+            const body = document.createElement('div');
+            body.className = 'review-body';
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'review-text';
+            textSpan.textContent = review.text;
+            body.appendChild(textSpan);
+
+            if (review.signature) {
+              const sigImg = document.createElement('img');
+              sigImg.src = review.signature;
+              sigImg.className = 'signature-display';
+              body.appendChild(sigImg);
+            }
+
+            wrapper.appendChild(header);
+            wrapper.appendChild(body);
+
+            return wrapper;
+          }
+
+          async function loadReviews() {
+            try {
+              const q = window.db.collection('reviews').orderBy('time', 'desc');
+              const querySnapshot = await q.get();
+              reviewsEl.innerHTML = '';
+              querySnapshot.forEach((doc) => {
+                const review = doc.data();
+                reviewsEl.appendChild(createReviewEl(review));
+              });
+            } catch (error) {
+              console.error('Error loading reviews:', error);
+            }
+          }
+
+          form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const text = form.experience.value.trim();
+            const signature = canvas.toDataURL();
+
+            // Check if canvas is empty (simplified check)
+            const blank = document.createElement('canvas');
+            blank.width = canvas.width;
+            blank.height = canvas.height;
+            if (canvas.toDataURL() === blank.toDataURL()) {
+              alert('Please provide a signature.');
+              return;
+            }
+
+            if (!text || !currentUser) return;
+
+            try {
+              await window.db.collection('reviews').add({
+                name: currentUser.displayName || 'Guest',
+                profilePic: currentUser.photoURL || '',
+                text,
+                signature,
+                time: new Date()
+              });
+
+              loadReviews();
+              form.reset();
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+            } catch (error) {
+              console.error('Error adding review:', error);
+              alert('Failed to submit review. Please try again.');
+            }
+          });
+
+          loadReviews();
         });
-      } catch (error) {
-        console.error('Error loading reviews:', error);
-      }
-    }
+      </script>
 
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const name = form.name.value.trim();
-      const text = form.experience.value.trim();
-      if (!text) return;
-
-      try {
-        await window.db.collection('reviews').add({
-          name: name || 'Guest',
-          text,
-          time: new Date()
-        });
-
-        loadReviews();
-        form.reset();
-      } catch (error) {
-        console.error('Error adding review:', error);
-        alert('Failed to submit review. Please try again.');
-      }
-    });
-
-    loadReviews();
-  });
-  </script>
-
-  </div>
+    </div>
 
 
 
 </body>
+
 </html>

@@ -1,14 +1,20 @@
 * html,
 body {
     background-color: black;
-
+    text-align: center;
 }
 
 
 .nav {
     margin-top: 30px;
-    text-align: justify;
+    margin-bottom: 20px;
+    text-align: left;
+}
 
+.nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .first,
@@ -23,15 +29,30 @@ body {
 .main {
     color: white;
     font-size: 20px;
-    text-align: justify;
+    text-align: left;
     margin-bottom: 0%;
 
+}
+
+.content-wrapper {
+    display: inline-block;
+    text-align: left;
+    max-width: 800px;
+    /* or auto/unset to fit content */
 }
 
 .textbody {
     text-align: justify;
     text-indent: 10px;
     color: white;
+    /* Removed display: inline-block; as it is now inside a wrapper */
+}
+
+.ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+    text-align: left;
 }
 
 .find,
@@ -56,13 +77,13 @@ body {
     font-size: 13px;
     color: rgb(168, 165, 165);
 
-    text-align: justify;
+    text-align: center;
 }
 
 .container {
     margin: 0 auto;
     width: 80%;
-
+    text-align: center;
 }
 
 .tittle {

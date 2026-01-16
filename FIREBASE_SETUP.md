@@ -1,33 +1,54 @@
-# Firebase Setup for Guestbook
+# Firebase Authentication Setup Guide
 
-To enable shared reviews across visitors, this guestbook now uses Firebase Firestore.
+To enable **Google** and **GitHub** sign-in for your guestbook, follow these steps in your Firebase Console and GitHub settings.
 
-## Steps to Set Up:
+## 1. Enable Google Sign-in
+1. Go to the [Firebase Console](https://console.firebase.google.com/).
+2. Select your project: **my-portfolioone**.
+3. In the left sidebar, click **Authentication** > **Sign-in method**.
+4. Click **Add new provider** and select **Google**.
+5. Enable it, provide a project support email, and click **Save**.
 
-1. Go to [Firebase Console](https://console.firebase.google.com/) and create a new project.
+---
 
-2. Enable Firestore Database in your project.
+## 2. Enable GitHub Sign-in
+This requires creating an OAuth App on GitHub.
 
-3. Go to Project Settings > General > Your apps, and add a web app.
+### Step A: Create the OAuth App on GitHub
+1. Sign in to your [GitHub account](https://github.com/).
+2. In the upper-right corner, click your profile photo, then click **Settings**.
+3. In the left sidebar, scroll down and click **Developer settings**.
+4. Click **OAuth Apps** > **New OAuth App**.
+5. Fill in the following:
+   - **Application name**: `Kabutey Portfolio Guestbook` (or anything you like)
+   - **Homepage URL**: `http://localhost:5173` (or your eventual website URL)
+   - **Authorization callback URL**: 
+     > [!IMPORTANT]
+     > Copy this URL from the Firebase Console. 
+     > Go to **Firebase Auth** > **Sign-in method** > **GitHub** > **Setup instructions** to find it. 
+     > It usually looks like: `https://my-portfolioone.firebaseapp.com/__/auth/handler`
+6. Click **Register application**.
 
-4. Copy the Firebase config object (apiKey, authDomain, etc.).
+### Step B: Get Credentials
+1. On your new GitHub App page, copy the **Client ID**.
+2. Click **Generate a new client secret** and copy the **Client Secret**.
 
-5. In `guestbook.html`, replace the placeholders in the firebaseConfig with your actual values.
+### Step C: Configure Firebase
+1. Go back to **Firebase Console** > **Authentication** > **Sign-in method**.
+2. Click **Add new provider** > **GitHub**.
+3. Enable it and paste the **Client ID** and **Client Secret** you just copied.
+4. Click **Save**.
 
-6. Set Firestore rules to allow reads and writes (for testing, allow all; for production, restrict as needed).
+---
 
-Example Firestore Rules:
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true; // Change for production
-    }
-  }
-}
-```
+## 4. Troubleshooting: "Account already exists..."
+If you see an error saying **"An account already exists with the same email address..."**, it's because your Google and GitHub accounts use the same email.
 
-7. Deploy your site, and reviews will be shared.
+To fix this:
+1. Go to **Firebase Console** > **Authentication** > **Settings** (tab at the top).
+2. Look for **User accounts** (or "User property") in the sidebar.
+3. Click **One account per email address**.
+4. Change it to **Allow creation of multiple accounts with the same email address**.
+5. Click **Save**.
 
-Note: Firestore has a free tier, but monitor usage.
+Now you will be able to sign in with either Google or GitHub even if they use the same email!

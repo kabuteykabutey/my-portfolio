@@ -33,9 +33,63 @@ body {
   text-align: center;
 }
 
-#name {
-  font-size: 18px;
+.signature-container {
+  margin-top: 10px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 5px;
+  position: relative;
+}
 
+#signature-pad {
+  display: block;
+  width: 100%;
+  cursor: crosshair;
+  background: #111;
+}
+
+.signature-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 5px;
+}
+
+.clear-btn {
+  margin-top: 5px;
+  width: 48%;
+  /* Adjust width for two buttons */
+  padding: 5px 10px;
+  font-size: 12px;
+  background: #444;
+}
+
+.review-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.review-text {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #ccc;
+  word-break: break-word;
+}
+
+.signature-display {
+  height: 35px;
+  /* Reduced size */
+  width: auto;
+  max-width: 150px;
+  display: inline-block;
+  vertical-align: middle;
+  object-fit: contain;
+  /* Prevent distortion */
+  /* Drawing is done in white, so it displays well on the dark review background */
+  padding-top: 10px;
 }
 
 .container {
@@ -116,15 +170,82 @@ button:hover {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.review-header {
-  font-weight: 700;
-  font-size: 13px;
-  color: #cfcfcf;
-  margin-bottom: 6px;
+.user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
-.review-text {
-  white-space: pre-wrap;
-  line-height: 1.4;
-  margin: 0;
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  object-fit: cover;
+}
+
+.review-profile-pic {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  object-fit: cover;
+  border: 1px solid #444;
+}
+
+.auth-box {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #222;
+  border-radius: 8px;
+  border: 1px dashed #444;
+}
+
+.auth-btn-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.auth-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  width: auto;
+  margin-top: 0;
+}
+
+.auth-btn:hover {
+  opacity: 0.8;
+}
+
+.google {
+  background: #db4437;
+  color: white;
+}
+
+.github {
+  background: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
+.signout {
+  background: transparent;
+  color: #888;
+  text-decoration: underline;
+  font-size: 12px;
+}
+
+.signout:hover {
+  color: #fff;
+  background: transparent;
 }

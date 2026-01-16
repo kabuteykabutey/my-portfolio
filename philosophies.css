@@ -1,19 +1,25 @@
-* 
-
-html, body {
+* html,
+body {
     background-color: black;
     margin: 0;
     padding: 0;
 }
 
 .background {
-    text-align: justify;
+    text-align: center;
     background-color: black;
 }
 
 .nav {
     margin-top: 30px;
-   
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .first,
@@ -21,25 +27,35 @@ html, body {
 .third {
     text-decoration: none;
     color: rgb(168, 165, 165);
-  
+
 }
 
-.philosophy{
-    text-decoration: none;
-    text-align: justify;
-    color: white;
-   
-    font-size: 12px;
+.content-wrapper {
+    display: inline-block;
+    text-align: left;
 }
-.button{
-    
+
+.philosophy {
+    text-decoration: none;
+    text-align: left;
+    color: white;
+    font-size: 20px;
+    border-bottom: 2px solid white;
+    padding-bottom: 5px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.button {
+
     border-radius: 7px;
     margin-left: 5px;
     margin-top: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color:rgb(63, 63, 63);
+    background-color: rgb(63, 63, 63);
 }
-.container{
-    text-align:justify;
+
+.container {
+    text-align: center;
 }
