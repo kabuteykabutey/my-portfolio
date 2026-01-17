@@ -66,9 +66,9 @@ body {
 
 .review-body {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   margin-top: 5px;
 }
 
@@ -90,6 +90,8 @@ body {
   /* Prevent distortion */
   /* Drawing is done in white, so it displays well on the dark review background */
   padding-top: 10px;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .container {
