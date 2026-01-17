@@ -152,22 +152,17 @@
           };
 
           document.getElementById('google-signin').addEventListener('click', () => {
-            window.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-              .then(() => {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                return window.auth.signInWithPopup(provider);
-              })
-              .catch(handleAuthError);
+            const provider = new firebase.auth.GoogleAuthProvider();
+            window.auth.signInWithRedirect(provider);
           });
 
           document.getElementById('github-signin').addEventListener('click', () => {
-            window.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-              .then(() => {
-                const provider = new firebase.auth.GithubAuthProvider();
-                return window.auth.signInWithPopup(provider);
-              })
-              .catch(handleAuthError);
+            const provider = new firebase.auth.GithubAuthProvider();
+            window.auth.signInWithRedirect(provider);
           });
+
+          // Handle redirect result (mostly for errors)
+          window.auth.getRedirectResult().catch(handleAuthError);
 
           document.getElementById('signout').addEventListener('click', () => {
             window.auth.signOut();
