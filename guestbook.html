@@ -10,6 +10,15 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function () {
+      // https://dashboard.emailjs.com/admin/account
+      emailjs.init({
+        publicKey: "YOUR_EMAILJS_PUBLIC_KEY",
+      });
+    })();
+  </script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyBmt0khZDoRZ0KbAy6HfGk_9bAoO3TqwHM",
@@ -322,6 +331,21 @@
               });
 
               loadReviews();
+
+              // Send Email Alert via EmailJS
+              const templateParams = {
+                from_name: currentUser.displayName || 'Guest',
+                message: text,
+                user_email: currentUser.email || 'N/A'
+              };
+
+              emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(() => {
+                  console.log('Email alert sent successfully!');
+                }, (error) => {
+                  console.error('Failed to send email alert:', error);
+                });
+
               form.reset();
               ctx.clearRect(0, 0, canvas.width, canvas.height);
             } catch (error) {

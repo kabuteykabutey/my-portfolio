@@ -52,3 +52,20 @@ To fix this:
 5. Click **Save**.
 
 Now you will be able to sign in with either Google or GitHub even if they use the same email!
+
+---
+
+## 5. Enable Gmail Alerts (EmailJS)
+To receive email alerts when someone leaves a review, you need to set up **EmailJS**.
+
+1. **Sign up**: Create a free account at [EmailJS](https://www.emailjs.com/).
+2. **Add Service**: Connect your Gmail account in the "Email Services" tab. Note your **Service ID**.
+3. **Create Template**: In "Email Templates", create a new template with:
+   - **Subject**: `New Guestbook Review from {{from_name}}`
+   - **Content**: `You received a new review: {{message}} (From: {{user_email}})`
+   - Note your **Template ID**.
+4. **Get Public Key**: Go to "Account" -> "API Keys" to find your **Public Key**.
+5. **Update Code**: Open [guestbook.html](file:///c:/Users/Kabutey/OneDrive/Desktop/my-portfolio/my-portfolio/guestbook.html) and replace the placeholders:
+   - `YOUR_EMAILJS_PUBLIC_KEY` (around line 17)
+   - `YOUR_SERVICE_ID` (around line 334)
+   - `YOUR_TEMPLATE_ID` (around line 334)
