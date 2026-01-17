@@ -119,6 +119,7 @@
 
           // Auth State Handling
           window.auth.onAuthStateChanged((user) => {
+            console.log("Auth state changed. User:", user ? (user.displayName || user.email) : "null");
             if (user) {
               currentUser = user;
               authButtons.style.display = 'none';
@@ -153,16 +154,21 @@
 
           document.getElementById('google-signin').addEventListener('click', () => {
             const provider = new firebase.auth.GoogleAuthProvider();
-            window.auth.signInWithRedirect(provider);
+            window.auth.signInWithPopup(provider)
+              .then((result) => {
+                console.log("Login success:", result.user.displayName);
+              })
+              .catch(handleAuthError);
           });
 
           document.getElementById('github-signin').addEventListener('click', () => {
             const provider = new firebase.auth.GithubAuthProvider();
-            window.auth.signInWithRedirect(provider);
+            window.auth.signInWithPopup(provider)
+              .then((result) => {
+                console.log("Login success:", result.user.displayName);
+              })
+              .catch(handleAuthError);
           });
-
-          // Handle redirect result (mostly for errors)
-          window.auth.getRedirectResult().catch(handleAuthError);
 
           document.getElementById('signout').addEventListener('click', () => {
             window.auth.signOut();
