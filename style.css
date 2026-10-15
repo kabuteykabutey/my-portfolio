@@ -1,96 +1,91 @@
-* html,
-body {
-    background-color: black;
-    text-align: center;
+* {
+    box-sizing: border-box;
 }
 
+html,
+body {
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-family: 'Comic Neue', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 620px;
+    padding: 2.5rem 1.5rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrapper {
+    width: 100%;
+    text-align: left;
+}
 
 .nav {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    text-align: left;
+    margin-bottom: 2rem;
+    width: 100%;
 }
 
 .nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.nav ul li {
+    display: inline-block;
 }
 
 .first,
 .second,
-.third {
-
+.third,
+.nav a {
     text-decoration: none;
     color: rgb(168, 165, 165);
+    font-size: 1.05rem;
+    font-weight: 500;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
 
+.nav a:hover,
+.nav a.active {
+    color: white;
 }
 
 .main {
     color: white;
-    font-size: 20px;
+    font-size: 1.75rem;
+    font-weight: bold;
     text-align: left;
-    margin-bottom: 0%;
-
+    margin: 0 0 0.6rem 0;
+    line-height: 1.3;
 }
 
-.content-wrapper {
-    display: inline-block;
-    text-align: left;
-    max-width: 800px;
-    /* or auto/unset to fit content */
-}
-
-.textbody {
-    text-align: justify;
-    text-indent: 10px;
-    color: white;
-    /* Removed display: inline-block; as it is now inside a wrapper */
-}
-
-.ul {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0 0 0;
-    text-align: left;
-}
-
-.find,
-.me,
-.he {
-    text-decoration: none;
-    font-size: 13px;
-    color: rgb(168, 165, 165);
-
-}
-
-.last {
-    text-decoration: none;
-    font-size: 13px;
-    color: rgb(148, 144, 144);
-
-    margin-bottom: 20%;
-}
-
-.she {
-    text-decoration: none;
-    font-size: 13px;
-    color: rgb(168, 165, 165);
-
-    text-align: center;
-}
-
-.container {
-    margin: 0 auto;
-    width: 80%;
-    text-align: center;
+.wrapper {
+    margin-bottom: 1.25rem;
 }
 
 .tittle {
     font-family: 'Comic Neue', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     font-weight: 700;
     color: white;
+    margin: 0;
 }
 
 .tittle span:after {
@@ -98,39 +93,113 @@ body {
     animation: words 6s infinite;
 }
 
-@keyframes words {
+.linkedin-box {
+    margin-bottom: 1.5rem;
+}
 
-    0%,
-    33% {
+.she {
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: rgb(168, 165, 165);
+    transition: color 0.2s ease;
+    display: inline-block;
+}
+
+.she:hover {
+    color: white;
+}
+
+.textbody {
+    text-align: left;
+    line-height: 1.7;
+    color: white;
+    font-size: 1.05rem;
+    margin: 1.5rem 0 2rem 0;
+}
+
+.ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2.5rem;
+}
+
+.find,
+.me,
+.he,
+.last {
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: rgb(168, 165, 165);
+    transition: color 0.2s ease;
+    display: inline-block;
+}
+
+.last {
+    color: rgb(148, 144, 144);
+}
+
+.find:hover,
+.me:hover,
+.he:hover,
+.last:hover {
+    color: white;
+}
+
+@keyframes words {
+    0%, 33% {
         content: "Python";
         color: #d2d3d3;
-
     }
-
-    34%,
-    66% {
+    34%, 66% {
         content: "JavaScript";
         color: #797879;
-
     }
-
-    67%,
-    100% {
+    67%, 100% {
         content: "DataBase";
         color: #636159;
-
     }
-
-    101%,
-    134% {
+    101%, 134% {
         content: "HTML & CSS";
         color: #2f2e30;
+    }
+    135%, 168% {
+        content: "Software Development Life Cycle";
+        color: rgb(144, 144, 144);
+    }
+}
 
+@media screen and (max-width: 600px) {
+    body {
+        justify-content: flex-start;
+        padding-top: 1.5rem;
     }
 
-    135%,
-    168% {
-        content: "Software Development Life Cycle";
-        color: rgb(44, 44, 44)
+    .container {
+        padding: 1.25rem 1rem;
+    }
+
+    .nav ul {
+        gap: 1.5rem; /* Responsive gap on smaller screens */
+    }
+
+    .main {
+        font-size: 1.45rem;
+    }
+
+    .tittle {
+        font-size: 1.2rem;
+    }
+
+    .textbody {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .ul {
+        flex-direction: column;
+        gap: 0.85rem;
     }
 }
